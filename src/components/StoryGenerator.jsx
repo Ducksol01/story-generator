@@ -7,6 +7,7 @@ const StoryGenerator = () => {
   const [tone, setTone] = useState('neutral');
   const [keywords, setKeywords] = useState('');
   const [story, setStory] = useState('');
+  const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [storyLength, setStoryLength] = useState('medium');
@@ -185,7 +186,8 @@ ${story}
     e.preventDefault();
     setLoading(true);
     setError('');
-    setCharacterDetails('');
+    setStory('');
+    setTitle('');
     stopSpeech();
     
     if (!API_KEY) {
@@ -217,7 +219,28 @@ ${story}
       const response = await result.response;
       const text = response.text();
       setStory(text);
-      saveToHistory(text);
+
+      // Generate a title based on the story
+      const titlePrompt = `Based on this story, generate a creative and engaging title that captures its essence. The story is: ${text}
+      Make the title concise (maximum 6-8 words) and captivating. Return only the title, nothing else.`;
+      
+      const titleResult = await model.generateContent(titlePrompt);
+      const title = titleResult.response.text().trim();
+      setTitle(title);
+
+      // Save to history with title
+      const newStory = {
+        id: Date.now(),
+        title,
+        content: text,
+        prompt: fullPrompt,
+        timestamp: new Date().toISOString(),
+      };
+
+      const updatedHistory = [newStory, ...storyHistory].slice(0, 10);
+      setStoryHistory(updatedHistory);
+      localStorage.setItem('storyHistory', JSON.stringify(updatedHistory));
+
     } catch (err) {
       console.error('Error details:', err);
       setError('Failed to generate story. Error: ' + err.message);
@@ -405,6 +428,12 @@ ${story}
                   <h3 className="font-semibold mb-2">Character Profile 👤</h3>
                   <p className="text-slate-600">{characterDetails}</p>
                 </div>
+              )}
+
+              {title && (
+                <h2 className="text-2xl font-bold text-slate-800 mb-4 text-center">
+                  {title}
+                </h2>
               )}
 
               <div className="story-container">
