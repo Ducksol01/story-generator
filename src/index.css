@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    @apply bg-slate-50;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Utility Classes */
+.animate-fade-up {
+  animation: fadeUp 0.4s ease-out forwards;
+}
+
+/* Card Styles */
+.modern-card {
+  @apply bg-white rounded-lg shadow-sm border border-slate-200
+         hover:shadow-md transition-all duration-300;
+}
+
+/* Form Styles */
+.input-modern {
+  @apply w-full px-4 py-3 rounded-lg border border-slate-200
+         bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+         transition-all duration-200 outline-none;
+}
+
+.select-modern {
+  @apply w-full px-4 py-3 rounded-lg border border-slate-200
+         bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+         transition-all duration-200 outline-none;
+}
+
+/* Button Styles */
+.button-modern {
+  @apply px-6 py-3 rounded-lg bg-blue-600 text-white font-medium
+         hover:bg-blue-700 transition-all duration-200
+         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+         disabled:opacity-60 disabled:cursor-not-allowed;
+}
+
+/* Loading Animation */
+.loading-dot {
+  @apply w-2 h-2 rounded-full bg-white inline-block mx-0.5;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Typography */
+.heading-1 {
+  @apply text-4xl font-bold text-slate-900 tracking-tight;
+}
+
+.heading-2 {
+  @apply text-2xl font-semibold text-slate-900;
+}
+
+.body-text {
+  @apply text-slate-600 leading-relaxed;
+}
+
+/* Story Container */
+@layer components {
+  .story-container {
+    @apply text-base text-slate-600 leading-relaxed space-y-4;
+  }
+
+  .story-container p {
+    @apply mb-4;
+  }
+
+  .story-container h1, 
+  .story-container h2, 
+  .story-container h3 {
+    @apply font-bold text-slate-900 mb-4;
+  }
+
+  .story-container h1 {
+    @apply text-2xl;
+  }
+
+  .story-container h2 {
+    @apply text-xl;
+  }
+
+  .story-container h3 {
+    @apply text-lg;
+  }
+}
+
+/* Custom Selection */
+::selection {
+  @apply bg-blue-100;
+}
